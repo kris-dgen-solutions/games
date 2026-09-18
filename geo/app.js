@@ -268,7 +268,7 @@ function printMsg(text, color){
 	guessed.innerHTML = raj_nr + " /" + raj.length;
 	
 	let mistakes = document.getElementById("mistakes");
-	mistakes.innerHTML = attempts - raj_nr;
+	// mistakes.innerHTML = attempts - raj_nr;
 }
 
 
