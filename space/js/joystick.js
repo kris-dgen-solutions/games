@@ -15,18 +15,35 @@ class VirtualJoystick {
 
     _bindEvents() {
         const start = (e) => {
-            console.log("joystick.js start");
+            // console.log("joystick.js start");
             toggleShipEngines(true);
             this.active = true;
         };
 
         const move = (e) => {
             if (!this.active) return;
-            console.log("joystick.js move");
+            // console.log("joystick.js move");
 
             const rect = this.container.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
+
+            /// Check if the pointer is inside the joystick
+            if (
+                e.clientX < centerX - this.radius ||
+                e.clientX > centerX + this.radius ||
+                e.clientY < centerY - this.radius ||
+                e.clientY > centerY + this.radius
+            ) {
+                /// The pointer is outside the joystick
+                /// Apply movement based on player and joystick position
+                const value = {
+                    x: (ship.x - centerX) / this.radius,
+                    y: (e.clientY - centerY) / this.radius,
+                };
+                ship.turnToCoordinates(ship.x+value.x, ship.y+value.y);
+                return;
+            }
 
             const touch = e.touches ? e.touches[0] : e;
             let dx = touch.clientX - centerX;
@@ -59,7 +76,7 @@ class VirtualJoystick {
         };
 
         const end = () => {
-            console.log("joystick.js end");
+            // console.log("joystick.js end");
             this.active = false;
 
             toggleShipEngines(false);
@@ -93,8 +110,8 @@ const joystick = new VirtualJoystick(joystickElement, {
 
 // Hook into movement
 joystick.onMove = (value) => {
-    debug.textContent =
-        `X: ${value.x.toFixed(2)} | Y: ${value.y.toFixed(2)}`;
+    // debug.textContent =
+    //     `X: ${value.x.toFixed(2)} | Y: ${value.y.toFixed(2)}`;
 
     ship.turnToCoordinates(ship.x+value.x, ship.y+value.y);
     // Example: apply movement to player
