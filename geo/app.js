@@ -129,10 +129,10 @@ function printTime(){
 	let hms = secondsToTime(secs);
 	let out = "";
 	if(hms.h>0){
-		out = out + hms.h + " st, ";
+		out = out + hms.h + " h, ";
 	}
 	if(hms.m>0){
-		out = out + hms.m + " min, ";
+		out = out + hms.m + " m, ";
 	}
 	if(hms.s>0){
 		out = out + hms.s + "s";
